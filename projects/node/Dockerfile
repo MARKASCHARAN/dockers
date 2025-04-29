@@ -1,12 +1,14 @@
-FROM node:22-alpine
+FROM node:23-alpine
 
 WORKDIR /app
 
-COPY . .
-
 RUN npm install -g pnpm
 
-RUN pnpm install
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
 
 EXPOSE 3000
 
